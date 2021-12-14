@@ -25,7 +25,12 @@ describe("Testing Login Page", () => {
     render(<Login />);
 
     const btnPlay = screen.getByRole('button', { name: /Play/i});
+    const inputName = screen.getByLabelText('Player Name');
+    const inputEmail = screen.getByLabelText('E-mail');
     expect(btnPlay).toBeInTheDocument();
     expect(btnPlay).toBeDisabled();
+    userEvent.type(inputName, 'Julio');
+    userEvent.type(inputEmail, 'julio@yahoo.com.br');
+    expect(btnPlay).not.toBeDisabled();
   })
 })
