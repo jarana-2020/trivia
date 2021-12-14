@@ -1,4 +1,4 @@
-import Login from "../../components/Login";
+import Login from "../../pages/Login";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
