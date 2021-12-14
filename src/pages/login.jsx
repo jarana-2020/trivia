@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import SendIcon from '@mui/icons-material/Send';
-import InputAdornment from '@mui/material/InputAdornment';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
+// import InputAdornment from '@mui/material/InputAdornment';
+// import AccountCircle from '@mui/icons-material/AccountCircle';
+// import MailIcon from '@mui/icons-material/Mail';
 import Box from '@mui/material/Box';
 import logo from '../images/trivia.png';
 import '../App.css';
@@ -21,22 +22,20 @@ const getDataInfo = (email, name) => {
   return true;
 };
 
+const startGame = (history) => {
+  history.push('/game');
+};
+
 const renderLoginEntries = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const history = useHistory();
   const verifyValues = getDataInfo(email, name);
   return (
     <>
       <TextField
         autoComplete="off"
         id="outlined-name"
-        InputProps={ {
-          startAdornment: (
-            <InputAdornment position="start">
-              <AccountCircle />
-            </InputAdornment>
-          ),
-        } }
         label="Player Name"
         variant="standard"
         value={ name }
@@ -47,13 +46,6 @@ const renderLoginEntries = () => {
         autoComplete="off"
         type="email"
         id="outlined-email"
-        InputProps={ {
-          startAdornment: (
-            <InputAdornment position="start">
-              <MailIcon />
-            </InputAdornment>
-          ),
-        } }
         label="E-mail"
         variant="standard"
         value={ email }
@@ -65,6 +57,7 @@ const renderLoginEntries = () => {
         variant="contained"
         endIcon={ <SendIcon /> }
         disabled={ verifyValues }
+        onClick={ () => startGame(history) }
       >
         Play
       </Button>
