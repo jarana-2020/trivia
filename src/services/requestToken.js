@@ -6,4 +6,6 @@ const requestToken = async () => {
   return response.token;
 };
 
+requestToken();
+
 export default requestToken;

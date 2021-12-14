@@ -9,6 +9,7 @@ import SendIcon from '@mui/icons-material/Send';
 import Box from '@mui/material/Box';
 import logo from '../images/trivia.png';
 import '../App.css';
+import requestToken from '../services/requestToken';
 
 const validateEmail = (email) => {
   const regEX = /\S+@\S+\.\S+/;
@@ -22,7 +23,9 @@ const getDataInfo = (email, name) => {
   return true;
 };
 
-const startGame = (history) => {
+const startGame = async (history) => {
+  const token = await requestToken();
+  localStorage.setItem('token', JSON.stringify(token));
   history.push('/game');
 };
 
