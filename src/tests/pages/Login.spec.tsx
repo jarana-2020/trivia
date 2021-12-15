@@ -1,6 +1,6 @@
 import Login from "../../pages/login";
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import userEvent from '@testing-library/user-event'
 
 describe("Testing Login Page", () => {
   it("should have a field for player name" , () => {
