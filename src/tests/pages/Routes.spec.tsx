@@ -14,6 +14,8 @@ describe("Testing routes", () => {
         <App />
       </Router>
     );
-    expect(history.location.pathname).toEqual('/');
+    const path = history.location.pathname;
+    expect(path).toEqual('/');
   })
+
 });

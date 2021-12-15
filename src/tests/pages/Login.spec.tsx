@@ -1,6 +1,10 @@
 import Login from "../../pages/login";
 import { render, screen } from "@testing-library/react";
 import userEvent from '@testing-library/user-event'
+import { createMemoryHistory } from 'history';
+import { Router } from 'react-router-dom';
+import App from '../../../src/App';
+
 
 describe("Testing Login Page", () => {
   it("should have a field for player name" , () => {
@@ -29,6 +33,7 @@ describe("Testing Login Page", () => {
     const inputEmail = screen.getByLabelText('E-mail');
     expect(btnPlay).toBeInTheDocument();
     expect(btnPlay).toBeDisabled();
+
     userEvent.type(inputName, 'Julio');
     userEvent.type(inputEmail, 'julio@yahoo.com.br');
     expect(btnPlay).not.toBeDisabled();
