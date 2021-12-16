@@ -8,12 +8,10 @@ const playerSlice = createSlice({
   },
   reducers: {
     addName(state, action) {
-      const { valueName } = action.payload;
-      state.name = valueName;
+      state.name = action.payload;
     },
     addEmail(state, action) {
-      const { valueEmail } = action.payload;
-      state.email = valueEmail;
+      state.email = action.payload;
     },
   },
 });
