@@ -16,9 +16,13 @@ const validateData = (name, email) => {
   return (!(regEX.test(email) && name.length > 0));
 };
 
-const startGame = async (history) => {
+const saveDataLocalStorage = async () => {
   const token = await requestToken();
   localStorage.setItem('token', JSON.stringify(token));
+};
+
+const startGame = (history) => {
+  saveDataLocalStorage();
   history.push('/game');
 };
 
