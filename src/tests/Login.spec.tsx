@@ -1,14 +1,18 @@
 import Login from "../pages/Login";
 import { render, screen } from "@testing-library/react";
 import userEvent from '@testing-library/user-event'
-import { createMemoryHistory } from 'history';
-import { Router } from 'react-router-dom';
-import App from '../App';
+import { Provider } from "react-redux";
+import store from "../store";
+
 
 
 describe("Testing Login Page", () => {
   it("should have a field for player name" , () => {
-    render(<Login />);
+    render(
+    <Provider store={store}>
+      <Login />
+    </Provider>
+   );
 
     const inputName = screen.getByLabelText('Player Name');
     userEvent.type(inputName, 'Julio');
@@ -17,7 +21,11 @@ describe("Testing Login Page", () => {
   })
 
   it("should have a field for player e-mail" , () => {
-    render(<Login />);
+    render(
+      <Provider store={store}>
+        <Login />
+      </Provider>
+     );
 
     const inputEmail = screen.getByLabelText('E-mail');
     userEvent.type(inputEmail, 'julio@yahoo.com.br');
@@ -26,7 +34,11 @@ describe("Testing Login Page", () => {
   })
 
   it("should have a button for start the trivia game" , () => {
-    render(<Login />);
+    render(
+      <Provider store={store}>
+        <Login />
+      </Provider>
+     );
 
     const btnPlay = screen.getByRole('button', { name: /Play/i});
     const inputName = screen.getByLabelText('Player Name');

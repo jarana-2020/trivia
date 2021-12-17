@@ -15,4 +15,16 @@ describe("Testing Game Page", () => {
     const imgLogo = screen.getByAltText(/logo-trivia/);
     expect(imgLogo).toBeInTheDocument();
   })
+
+  it("should have a text with the player name", () => {
+    render(<Game />)
+    const playerName = screen.getByTestId(/player-name/);
+    expect(playerName).toBeInTheDocument();
+  })
+
+  it("should have a text with the player email", () => {
+    render(<Game />)
+    const playerEmail = screen.getByTestId(/player-email/);
+    expect(playerEmail).toBeInTheDocument();
+  })
 })

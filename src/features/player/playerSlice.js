@@ -5,6 +5,8 @@ const playerSlice = createSlice({
   initialState: {
     name: '',
     email: '',
+    assertions: 0,
+    score: 0,
   },
   reducers: {
     addName(state, action) {
@@ -18,6 +20,8 @@ const playerSlice = createSlice({
 
 export const selectName = (state) => state.player.name;
 export const selectEmail = (state) => state.player.email;
+export const selectAssertions = (state) => state.player.assertions;
+export const selectScore = (state) => state.player.score;
 
 export const { addName, addEmail } = playerSlice.actions;
 export default playerSlice.reducer;
