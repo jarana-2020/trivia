@@ -16,5 +16,8 @@ const playerSlice = createSlice({
   },
 });
 
-export const { addName, addEmail } = playerSlice;
+export const selectName = (state) => state.player.name;
+export const selectEmail = (state) => state.player.email;
+
+export const { addName, addEmail } = playerSlice.actions;
 export default playerSlice.reducer;

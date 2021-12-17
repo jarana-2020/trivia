@@ -7,6 +7,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import Box from '@mui/material/Box';
+import { useDispatch } from 'react-redux';
+import { addName, addEmail } from '../features/player/playerSlice';
 import logo from '../images/trivia.png';
 import '../App.css';
 import requestToken from '../services/requestToken';
@@ -21,8 +23,10 @@ const saveDataLocalStorage = async () => {
   localStorage.setItem('token', JSON.stringify(token));
 };
 
-const startGame = (history) => {
+const startGame = (history, name, email, dispatch) => {
   saveDataLocalStorage();
+  dispatch(addName(name));
+  dispatch(addEmail(email));
   history.push('/game');
 };
 
@@ -65,23 +69,12 @@ const renderInputs = (name, setName, email, setEmail) => (
   </>
 );
 
-const renderButtonStart = (name, email) => {
-  const history = useHistory();
-  return (
-    <Button
-      variant="contained"
-      endIcon={ <SendIcon /> }
-      disabled={ validateData(name, email) }
-      onClick={ () => startGame(history) }
-    >
-      Play
-    </Button>
-  );
-};
-
 const Login = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   return (
     <Box
       component="section"
@@ -94,7 +87,15 @@ const Login = () => {
         src={ logo }
       />
       {renderInputs(name, setName, email, setEmail)}
-      {renderButtonStart(name, email)}
+      <Button
+        variant="contained"
+        endIcon={ <SendIcon /> }
+        disabled={ validateData(name, email) }
+        onClick={ () => startGame(history, name,
+          email, dispatch) }
+      >
+        Play
+      </Button>
     </Box>
   );
 };
