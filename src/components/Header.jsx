@@ -1,6 +1,7 @@
 import React from 'react';
-import { IconButton, Tooltip } from '@mui/material';
+import { IconButton, Tooltip, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
+import Proptypes from 'prop-types';
 import Settings from '@mui/icons-material/SettingsApplications';
 import { useHistory } from 'react-router-dom';
 import Logo from '../images/trivia.png';
@@ -9,7 +10,7 @@ const renderPageSettings = (history) => {
   history.push('/settings');
 };
 
-const Header = () => {
+const Header = ({ playerName }) => {
   const history = useHistory();
 
   return (
@@ -21,6 +22,13 @@ const Header = () => {
           textAlign: 'center',
           justifyContent: 'center' } }
       >
+        <Typography
+          variant="caption"
+          component="p"
+        >
+          {playerName}
+
+        </Typography>
         <img
           className="logo"
           src={ Logo }
@@ -38,6 +46,10 @@ const Header = () => {
       </Box>
     </header>
   );
+};
+
+Header.propTypes = {
+  playerName: Proptypes.string.isRequired,
 };
 
 export default Header;
