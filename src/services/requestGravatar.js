@@ -5,8 +5,9 @@ const url = 'https://www.gravatar.com/avatar/';
 const getGravatar = async (email) => {
   const hash = md5(email).toString();
   const fetchGravatar = await fetch(`${url}${hash}`);
-  const response = await fetchGravatar.json();
-  return response;
+  return fetchGravatar;
 };
+
+getGravatar('julioaranabr@yahoo.com.br');
 
 export default getGravatar;

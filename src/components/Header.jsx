@@ -5,12 +5,13 @@ import Proptypes from 'prop-types';
 import Settings from '@mui/icons-material/SettingsApplications';
 import { useHistory } from 'react-router-dom';
 import Logo from '../images/trivia.png';
+import getGravatar from '../services/requestGravatar';
 
 const renderPageSettings = (history) => {
   history.push('/settings');
 };
 
-const Header = ({ playerName }) => {
+const Header = ({ playerName, playerEmail, score }) => {
   const history = useHistory();
 
   return (
@@ -22,11 +23,22 @@ const Header = ({ playerName }) => {
           textAlign: 'center',
           justifyContent: 'center' } }
       >
+        <img
+          src={ getGravatar(playerEmail) }
+          alt="img-gravatar"
+        />
         <Typography
           variant="caption"
           component="p"
         >
           {playerName}
+
+        </Typography>
+        <Typography
+          variant="caption"
+          component="p"
+        >
+          {score}
 
         </Typography>
         <img
@@ -50,6 +62,8 @@ const Header = ({ playerName }) => {
 
 Header.propTypes = {
   playerName: Proptypes.string.isRequired,
+  playerEmail: Proptypes.string.isRequired,
+  score: Proptypes.number.isRequired,
 };
 
 export default Header;
