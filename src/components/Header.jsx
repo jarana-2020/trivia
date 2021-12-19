@@ -1,18 +1,42 @@
 import React from 'react';
 import { IconButton, Tooltip, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
-import Proptypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import Settings from '@mui/icons-material/SettingsApplications';
 import { useHistory } from 'react-router-dom';
 import Logo from '../images/trivia.png';
 import getGravatar from '../services/requestGravatar';
+import { selectEmail, selectName, selectScore } from '../features/player/playerSlice';
 
 const renderPageSettings = (history) => {
   history.push('/settings');
 };
 
-const Header = ({ playerName, playerEmail, score }) => {
+const renderDataPlayer = (name, score) => (
+  <>
+    <Typography
+      variant="caption"
+      component="p"
+    >
+      {name}
+
+    </Typography>
+    <Typography
+      variant="caption"
+      component="p"
+    >
+      {score}
+
+    </Typography>
+  </>
+
+);
+
+const Header = () => {
   const history = useHistory();
+  const email = useSelector(selectEmail);
+  const name = useSelector(selectName);
+  const score = useSelector(selectScore);
 
   return (
     <header>
@@ -24,23 +48,10 @@ const Header = ({ playerName, playerEmail, score }) => {
           justifyContent: 'center' } }
       >
         <img
-          src={ getGravatar(playerEmail) }
+          src={ getGravatar(email) }
           alt="img-gravatar"
         />
-        <Typography
-          variant="caption"
-          component="p"
-        >
-          {playerName}
-
-        </Typography>
-        <Typography
-          variant="caption"
-          component="p"
-        >
-          {score}
-
-        </Typography>
+        {renderDataPlayer(name, score)}
         <img
           className="logo"
           src={ Logo }
@@ -58,12 +69,6 @@ const Header = ({ playerName, playerEmail, score }) => {
       </Box>
     </header>
   );
-};
-
-Header.propTypes = {
-  playerName: Proptypes.string.isRequired,
-  playerEmail: Proptypes.string.isRequired,
-  score: Proptypes.number.isRequired,
 };
 
 export default Header;
