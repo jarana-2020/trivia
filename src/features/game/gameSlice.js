@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 const url = 'https://opentdb.com/api.php?amount=5';
 
 export const getQuestions = createAsyncThunk(
-  'questions/getQuestions',
+  'game/getQuestions',
   async () => {
     const fetchData = await fetch(url);
     const result = await fetchData.json();
@@ -12,7 +12,7 @@ export const getQuestions = createAsyncThunk(
 );
 
 const gameSlice = createSlice({
-  name: 'questions',
+  name: 'game',
   initialState: {
     questions: [],
   },
@@ -25,5 +25,5 @@ const gameSlice = createSlice({
 
 });
 
-export const selectQuestions = (state) => state.questions;
+export const selectQuestions = (state) => state.game.questions;
 export default gameSlice.reducer;

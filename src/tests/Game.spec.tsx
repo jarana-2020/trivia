@@ -25,4 +25,24 @@ describe("Testing Game Page", () => {
     const imgLogo = screen.getByAltText(/logo-trivia/);
     expect(imgLogo).toBeInTheDocument();
   })
+
+  it("should have category game", async() => {
+    render(
+      <Provider store={store}>
+        <Game />
+      </Provider>
+    );
+    const category = await screen.findByTestId(/question-category/);
+    expect(category).toBeInTheDocument();
+  })
+
+  it("should have a question", async() => {
+    render(
+      <Provider store={store}>
+        <Game />
+      </Provider>
+    );
+    const question = await screen.findByTestId(/question-text/);
+    expect(question).toBeInTheDocument();
+  })
 })
