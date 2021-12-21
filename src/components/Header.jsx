@@ -12,23 +12,45 @@ const renderPageSettings = (history) => {
   history.push('/settings');
 };
 
-const renderDataPlayer = (name, score) => (
-  <>
+const renderGravatar = (email) => (
+  <Box
+    sx={ {
+      display: 'flex',
+      alignItems: 'center',
+      textAlign: 'center',
+      justifyContent: 'center',
+    } }
+  >
+    <img
+      src={ getGravatar(email) }
+      alt="img-gravatar"
+    />
+  </Box>
+);
+
+const renderPlayerInfo = (name, score) => (
+
+  <Box
+    component="section"
+  >
     <Typography
-      variant="caption"
+      data-testid="player-name"
+      variant="h6"
       component="p"
+      style={ { marginRight: '5px' } }
     >
-      {name}
+      {`Player Name: ${name}`}
 
     </Typography>
     <Typography
-      variant="caption"
+      data-testid="player-email"
+      variant="h6"
       component="p"
     >
-      {score}
+      {`Score:${score}`}
 
     </Typography>
-  </>
+  </Box>
 
 );
 
@@ -45,16 +67,13 @@ const Header = () => {
           display: 'flex',
           alignItems: 'center',
           textAlign: 'center',
-          justifyContent: 'center' } }
+          justifyContent: 'space-between' } }
       >
-        <img
-          src={ getGravatar(email) }
-          alt="img-gravatar"
-        />
-        {renderDataPlayer(name, score)}
+        {renderGravatar(email)}
         <img
           className="logo"
           src={ Logo }
+          style={ { alignSelf: 'flex-end' } }
           alt="logo-trivia"
         />
         <Tooltip title="Settings">
@@ -67,6 +86,7 @@ const Header = () => {
           </IconButton>
         </Tooltip>
       </Box>
+      {renderPlayerInfo(name, score)}
     </header>
   );
 };
