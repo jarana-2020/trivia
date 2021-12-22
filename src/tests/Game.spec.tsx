@@ -3,6 +3,8 @@ import { render, screen } from "@testing-library/react";
 import Game from '../pages/Game';
 import { Provider } from "react-redux";
 import store from "../store";
+import userEvent from '@testing-library/user-event';
+import { borderColor } from '@mui/system';
 
 
 describe("Testing Game Page", () => {
@@ -54,6 +56,10 @@ describe("Testing Game Page", () => {
     );
     const buttonCorrectAnswer = await screen.findAllByTestId(/^correct-answer$/);
     expect(buttonCorrectAnswer.length).toBe(1);
+    userEvent.click(buttonCorrectAnswer[0]);
+    buttonCorrectAnswer.forEach((button) => {
+      expect(button).toHaveAttribute('borderColor','rgb(6, 240, 15)')
+    });
   })
 
   it("should have a button for wrong answer", async() => {
@@ -64,5 +70,9 @@ describe("Testing Game Page", () => {
     );
     const buttonWrongAnswer = await screen.findAllByTestId(/^wrong-answer$/);
     expect(buttonWrongAnswer.length > 0).toBeTruthy();
+    userEvent.click(buttonWrongAnswer[0]);
+    buttonWrongAnswer.forEach((button) => {
+      expect(button).toHaveAttribute('borderColor','rgb(255, 0, 0)')
+    })
   })
 })

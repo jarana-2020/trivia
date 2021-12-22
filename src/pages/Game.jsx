@@ -1,6 +1,7 @@
-import { Typography, Button, Box } from '@mui/material';
+import { Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import BoxAnswers from '../components/BoxAnswers';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
 import { getQuestions, selectQuestions } from '../features/game/gameSlice';
@@ -42,6 +43,7 @@ const Game = () => {
   const dispatch = useDispatch();
   const questions = useSelector(selectQuestions);
   const [questionIndex] = useState(0);
+  // const [isAnswered] = useState(false);
   const haveData = questions.length > 0;
 
   useEffect(() => {
@@ -67,23 +69,11 @@ const Game = () => {
       <Header />
       {renderCategoryAndQuestion(category, question)}
       {arrayQuestions.map((answer, index) => (
-        <Box
-          sx={ {
-            mt: '10px',
-            justifyContent: 'center',
-            display: 'flex',
-            width: '100%' } }
+        <BoxAnswers
           key={ index }
-        >
-          <Button
-            data-testid={ answer === correctAnswer
-              ? 'correct-answer'
-              : 'wrong-answer' }
-          >
-            {answer}
-
-          </Button>
-        </Box>
+          answer={ answer }
+          correctAnswer={ correctAnswer }
+        />
       ))}
     </>
   );
