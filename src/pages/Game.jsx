@@ -5,6 +5,16 @@ import Header from '../components/Header';
 import Loading from '../components/Loading';
 import { getQuestions, selectQuestions } from '../features/game/gameSlice';
 
+// consulted page https://www.horadecodar.com.br/2021/05/10/como-embaralhar-um-array-em-javascript-shuffle/
+
+const shuffleArray = (arr) => {
+  for (let i = arr.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+};
+
 const renderCategoryAndQuestion = (category, question) => (
   <>
     <Typography
@@ -50,7 +60,7 @@ const Game = () => {
   const correctAnswer = questions[questionIndex].correct_answer;
   const incorrectAnswers = questions[questionIndex].incorrect_answers;
   const arrayQuestions = [...incorrectAnswers, correctAnswer];
-  console.log(arrayQuestions);
+  shuffleArray(arrayQuestions);
 
   return (
     <>

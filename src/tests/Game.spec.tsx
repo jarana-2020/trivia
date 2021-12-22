@@ -52,8 +52,8 @@ describe("Testing Game Page", () => {
         <Game />
       </Provider>
     );
-    const buttonCorrectAnswer = await screen.findByTestId(/^correct-answer$/);
-    expect(buttonCorrectAnswer).toBeInTheDocument();
+    const buttonCorrectAnswer = await screen.findAllByTestId(/^correct-answer$/);
+    expect(buttonCorrectAnswer.length).toBe(1);
   })
 
   it("should have a button for wrong answer", async() => {
