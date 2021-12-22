@@ -1,14 +1,14 @@
 import { Typography } from '@mui/material';
 import React from 'react';
 
-const Loading = () => {
+const Loading = () => (
   <Typography
     data-testid="question-category"
-    variant="h3"
+    variant="h4"
     component="p"
   >
     Loading...Loading...Loading
-  </Typography>;
-};
+  </Typography>
+);
 
 export default Loading;

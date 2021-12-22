@@ -45,4 +45,24 @@ describe("Testing Game Page", () => {
     const question = await screen.findByTestId(/question-text/);
     expect(question).toBeInTheDocument();
   })
+
+  it("should have a button for correct answer", async() => {
+    render(
+      <Provider store={store}>
+        <Game />
+      </Provider>
+    );
+    const buttonCorrectAnswer = await screen.findByTestId(/^correct-answer$/);
+    expect(buttonCorrectAnswer).toBeInTheDocument();
+  })
+
+  it("should have a button for wrong answer", async() => {
+    render(
+      <Provider store={store}>
+        <Game />
+      </Provider>
+    );
+    const buttonWrongAnswer = await screen.findAllByTestId(/^wrong-answer$/);
+    expect(buttonWrongAnswer.length > 0).toBeTruthy();
+  })
 })
