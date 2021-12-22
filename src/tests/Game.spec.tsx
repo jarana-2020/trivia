@@ -58,7 +58,7 @@ describe("Testing Game Page", () => {
     expect(buttonCorrectAnswer.length).toBe(1);
     userEvent.click(buttonCorrectAnswer[0]);
     buttonCorrectAnswer.forEach((button) => {
-      expect(button).toHaveAttribute('borderColor','rgb(6, 240, 15)')
+      expect(button).toHaveStyle('borderColor: 3px solid rgb(6, 240, 15)')
     });
   })
 
@@ -72,7 +72,7 @@ describe("Testing Game Page", () => {
     expect(buttonWrongAnswer.length > 0).toBeTruthy();
     userEvent.click(buttonWrongAnswer[0]);
     buttonWrongAnswer.forEach((button) => {
-      expect(button).toHaveAttribute('borderColor','rgb(255, 0, 0)')
+      expect(button).toHaveStyle('borderColor: 3px solid rgb(255, 0, 0)')
     })
   })
 })

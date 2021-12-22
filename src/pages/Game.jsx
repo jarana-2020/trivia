@@ -43,12 +43,16 @@ const Game = () => {
   const dispatch = useDispatch();
   const questions = useSelector(selectQuestions);
   const [questionIndex] = useState(0);
-  // const [isAnswered] = useState(false);
+  const [isAnswered, setIsAnswered] = useState(false);
   const haveData = questions.length > 0;
 
   useEffect(() => {
     dispatch(getQuestions());
   }, []);
+
+  const handleClickAnswer = () => {
+    setIsAnswered(true);
+  };
 
   if (!haveData) {
     return (
@@ -72,7 +76,9 @@ const Game = () => {
         <BoxAnswers
           key={ index }
           answer={ answer }
+          answered={ isAnswered }
           correctAnswer={ correctAnswer }
+          handleClick={ handleClickAnswer }
         />
       ))}
     </>
