@@ -4,7 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import BoxAnswers from '../components/BoxAnswers';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
+import Timer from '../components/Timer';
 import { getQuestions, selectQuestions } from '../features/game/gameSlice';
+import maxTimer from '../helper/helper';
 
 // consulted page https://www.horadecodar.com.br/2021/05/10/como-embaralhar-um-array-em-javascript-shuffle/
 
@@ -36,18 +38,7 @@ const renderCategoryAndQuestion = (category, question, timer) => (
       {question}
 
     </Typography>
-    <Typography
-      sx={ {
-        textAlign: 'center',
-        marginTop: '25px',
-      } }
-      data-testid="question-text"
-      variant="h3"
-      component="p"
-    >
-      {timer}
-
-    </Typography>
+    <Timer timer={ timer } />
   </>
 );
 
@@ -84,10 +75,10 @@ const Game = () => {
   const questions = useSelector(selectQuestions);
   const [questionIndex] = useState(0);
   const [isAnswered, setIsAnswered] = useState(false);
-  const maxTimer = 30;
   const [timer, setTimer] = useState(maxTimer);
   const haveData = questions.length > 0;
   let countDown = maxTimer;
+
   const paramsQuestions = {
     questions,
     questionIndex,
@@ -96,18 +87,19 @@ const Game = () => {
     timer,
   };
 
-  function startTimer() {
+  const startTimer = () => {
     const oneSecond = 1000;
     if (countDown > 0) {
       countDown -= 1;
       setTimer((prevTimer) => prevTimer - 1);
     }
     setTimeout(startTimer, oneSecond);
-  }
+  };
 
   useEffect(() => {
     dispatch(getQuestions());
     startTimer();
+    return () => clearTimeout(startTimer);
   }, []);
 
   if (!haveData) {

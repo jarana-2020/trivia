@@ -24,7 +24,7 @@ const BoxAnswers = ({ answer, correctAnswer, handleClick, answered, time }) => {
           ? 'correct-answer'
           : 'wrong-answer' }
         onClick={ handleClick }
-        disabled={ time === 0 }
+        disabled={ time === 0 || answered }
         sx={ {
           border: answered ? alterBorderColor() : null,
         } }
