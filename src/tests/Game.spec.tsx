@@ -75,4 +75,26 @@ describe("Testing Game Page", () => {
       expect(button).toHaveStyle('borderColor: 3px solid rgb(255, 0, 0)')
     })
   })
+
+  it("should be able to respond after five seconds", async() => {
+    render(
+      <Provider store={store}>
+        <Game />
+      </Provider>
+    );
+    const buttons = await screen.findAllByTestId(/^wrong-answer$/);
+    jest.setTimeout(5000);
+    expect(buttons[0]).not.toBeDisabled();
+  })
+
+  it("shouldn't be able to respond after thirty seconds", async() => {
+    render(
+      <Provider store={store}>
+        <Game />
+      </Provider>
+    );
+    const buttons = await screen.findAllByTestId(/^wrong-answer$/);
+    jest.setTimeout(31000);
+    expect(buttons[0]).toBeDisabled();
+  })
 })

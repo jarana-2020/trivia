@@ -16,7 +16,7 @@ const shuffleArray = (arr) => {
   return arr;
 };
 
-const renderCategoryAndQuestion = (category, question) => (
+const renderCategoryAndQuestion = (category, question, timer) => (
   <>
     <Typography
       sx={ { textAlign: 'center', mt: '10px' } }
@@ -36,42 +36,35 @@ const renderCategoryAndQuestion = (category, question) => (
       {question}
 
     </Typography>
+    <Typography
+      sx={ {
+        textAlign: 'center',
+        marginTop: '25px',
+      } }
+      data-testid="question-text"
+      variant="h3"
+      component="p"
+    >
+      {timer}
+
+    </Typography>
   </>
 );
 
-const Game = () => {
-  const dispatch = useDispatch();
-  const questions = useSelector(selectQuestions);
-  const [questionIndex] = useState(0);
-  const [isAnswered, setIsAnswered] = useState(false);
-  const haveData = questions.length > 0;
-
-  useEffect(() => {
-    dispatch(getQuestions());
-  }, []);
-
-  const handleClickAnswer = () => {
-    setIsAnswered(true);
-  };
-
-  if (!haveData) {
-    return (
-      <>
-        <Header />
-        <Loading />
-      </>
-    );
-  }
-  const { category, question } = questions[questionIndex];
+const renderQuestions = (paramsQuestions) => {
+  const { questions, questionIndex,
+    isAnswered, setIsAnswered, timer } = paramsQuestions;
   const correctAnswer = questions[questionIndex].correct_answer;
   const incorrectAnswers = questions[questionIndex].incorrect_answers;
   const arrayQuestions = [...incorrectAnswers, correctAnswer];
   shuffleArray(arrayQuestions);
 
+  const handleClickAnswer = () => {
+    setIsAnswered(true);
+  };
+
   return (
     <>
-      <Header />
-      {renderCategoryAndQuestion(category, question)}
       {arrayQuestions.map((answer, index) => (
         <BoxAnswers
           key={ index }
@@ -79,9 +72,57 @@ const Game = () => {
           answered={ isAnswered }
           correctAnswer={ correctAnswer }
           handleClick={ handleClickAnswer }
+          time={ timer }
         />
       ))}
     </>
+  );
+};
+
+const Game = () => {
+  const dispatch = useDispatch();
+  const questions = useSelector(selectQuestions);
+  const [questionIndex] = useState(0);
+  const [isAnswered, setIsAnswered] = useState(false);
+  const maxTimer = 30;
+  const [timer, setTimer] = useState(maxTimer);
+  const haveData = questions.length > 0;
+  let countDown = maxTimer;
+  const paramsQuestions = {
+    questions,
+    questionIndex,
+    isAnswered,
+    setIsAnswered,
+    timer,
+  };
+
+  function startTimer() {
+    const oneSecond = 1000;
+    if (countDown > 0) {
+      countDown -= 1;
+      setTimer((prevTimer) => prevTimer - 1);
+    }
+    setTimeout(startTimer, oneSecond);
+  }
+
+  useEffect(() => {
+    dispatch(getQuestions());
+    startTimer();
+  }, []);
+
+  if (!haveData) {
+    return (
+      <Loading />
+    );
+  }
+  const { category, question } = questions[questionIndex];
+  return (
+    <>
+      <Header />
+      {renderCategoryAndQuestion(category, question, timer)}
+      {renderQuestions(paramsQuestions)}
+    </>
+
   );
 };
 

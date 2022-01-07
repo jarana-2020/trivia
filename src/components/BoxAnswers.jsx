@@ -3,7 +3,7 @@ import { Box } from '@mui/system';
 import Proptypes from 'prop-types';
 import React from 'react';
 
-const BoxAnswers = ({ answer, correctAnswer, handleClick, answered }) => {
+const BoxAnswers = ({ answer, correctAnswer, handleClick, answered, time }) => {
   const alterBorderColor = () => {
     if (answer === correctAnswer) {
       return '3px solid rgb(6, 240, 15)';
@@ -24,6 +24,7 @@ const BoxAnswers = ({ answer, correctAnswer, handleClick, answered }) => {
           ? 'correct-answer'
           : 'wrong-answer' }
         onClick={ handleClick }
+        disabled={ time === 0 }
         sx={ {
           border: answered ? alterBorderColor() : null,
         } }
@@ -40,6 +41,7 @@ BoxAnswers.propTypes = {
   answer: Proptypes.string.isRequired,
   handleClick: Proptypes.func.isRequired,
   answered: Proptypes.bool.isRequired,
+  time: Proptypes.number.isRequired,
 };
 
 export default BoxAnswers;

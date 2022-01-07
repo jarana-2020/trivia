@@ -1,14 +1,18 @@
 import { Typography } from '@mui/material';
 import React from 'react';
+import Header from './Header';
 
 const Loading = () => (
-  <Typography
-    data-testid="question-category"
-    variant="h4"
-    component="p"
-  >
-    Loading...Loading...Loading
-  </Typography>
+  <>
+    <Header />
+    <Typography
+      data-testid="question-category"
+      variant="h4"
+      component="p"
+    >
+      Loading...Loading...Loading
+    </Typography>
+  </>
 );
 
 export default Loading;
