@@ -8,16 +8,6 @@ import Timer from '../components/Timer';
 import { getQuestions, selectQuestions } from '../features/game/gameSlice';
 import maxTimer from '../helper/helper';
 
-// consulted page https://www.horadecodar.com.br/2021/05/10/como-embaralhar-um-array-em-javascript-shuffle/
-
-const shuffleArray = (arr) => {
-  for (let i = arr.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-};
-
 const renderCategoryAndQuestion = (category, question, timer) => (
   <>
     <Typography
@@ -46,9 +36,7 @@ const renderQuestions = (paramsQuestions) => {
   const { questions, questionIndex,
     isAnswered, setIsAnswered, timer } = paramsQuestions;
   const correctAnswer = questions[questionIndex].correct_answer;
-  const incorrectAnswers = questions[questionIndex].incorrect_answers;
-  const arrayQuestions = [...incorrectAnswers, correctAnswer];
-  shuffleArray(arrayQuestions);
+  const { shuffledQuestions } = questions[questionIndex];
 
   const handleClickAnswer = () => {
     setIsAnswered(true);
@@ -56,7 +44,7 @@ const renderQuestions = (paramsQuestions) => {
 
   return (
     <>
-      {arrayQuestions.map((answer, index) => (
+      {shuffledQuestions.map((answer, index) => (
         <BoxAnswers
           key={ index }
           answer={ answer }

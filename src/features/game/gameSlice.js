@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { shuffleArray } from '../../helper/helper';
 
 const url = 'https://opentdb.com/api.php?amount=5';
 
@@ -7,7 +8,14 @@ export const getQuestions = createAsyncThunk(
   async () => {
     const fetchData = await fetch(url);
     const result = await fetchData.json();
-    return result.results;
+    const { results } = result;
+    const newResults = results.map((question) => {
+      const { incorrect_answers: incorrect, correct_answer: correct } = question;
+      const alteredQuestion = { ...question,
+        shuffledQuestions: shuffleArray([...incorrect, correct]) };
+      return alteredQuestion;
+    });
+    return newResults;
   },
 );
 
