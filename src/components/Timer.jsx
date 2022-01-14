@@ -8,7 +8,6 @@ const Timer = ({ timer }) => (
       textAlign: 'center',
       marginTop: '25px',
     } }
-    data-testid="question-text"
     variant="h3"
     component="p"
   >

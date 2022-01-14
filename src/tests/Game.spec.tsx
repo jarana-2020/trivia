@@ -1,10 +1,9 @@
 import React from 'react';
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import Game from '../pages/Game';
 import { Provider } from "react-redux";
 import store from "../store";
 import userEvent from '@testing-library/user-event';
-import { borderColor } from '@mui/system';
 
 
 describe("Testing Game Page", () => {
@@ -75,6 +74,7 @@ describe("Testing Game Page", () => {
       expect(button).toHaveStyle('borderColor: 3px solid rgb(255, 0, 0)')
     })
   })
+  jest.setTimeout(38000);
 
   it("should be able to respond after five seconds", async() => {
     render(
@@ -83,8 +83,8 @@ describe("Testing Game Page", () => {
       </Provider>
     );
     const buttons = await screen.findAllByTestId(/^wrong-answer$/);
-    jest.setTimeout(5000);
-    expect(buttons[0]).not.toBeDisabled();
+    await new Promise((r) => setTimeout(r, 6000));
+    expect(buttons[0]).not.toBeDisabled(); 
   })
 
   it("shouldn't be able to respond after thirty seconds", async() => {
@@ -94,7 +94,7 @@ describe("Testing Game Page", () => {
       </Provider>
     );
     const buttons = await screen.findAllByTestId(/^wrong-answer$/);
-    jest.setTimeout(31000);
+    await new Promise((r) => setTimeout(r, 33000));
     expect(buttons[0]).toBeDisabled();
   })
 })
