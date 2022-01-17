@@ -18,13 +18,19 @@ const validateData = (name, email) => {
   return (!(regEX.test(email) && name.length > 0));
 };
 
-const saveDataLocalStorage = async () => {
+const saveTokenLocalStorage = async () => {
   const token = await requestToken();
   localStorage.setItem('token', JSON.stringify(token));
 };
 
+const savePlayerInfo = (name, email) => {
+  const playerInfo = { name, gravatarEmail: email };
+  localStorage.setItem('player', JSON.stringify(playerInfo));
+};
+
 const startGame = (history, name, email, dispatch) => {
-  saveDataLocalStorage();
+  saveTokenLocalStorage();
+  savePlayerInfo(name, email);
   dispatch(addName(name));
   dispatch(addEmail(email));
   history.push('/game');
