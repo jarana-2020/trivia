@@ -15,6 +15,10 @@ const playerSlice = createSlice({
     addEmail(state, action) {
       state.email = action.payload;
     },
+    alterScore(state, action) {
+      state.score = action.payload;
+      state.assertions += 1;
+    },
   },
 });
 
@@ -23,5 +27,5 @@ export const selectEmail = (state) => state.player.email;
 export const selectAssertions = (state) => state.player.assertions;
 export const selectScore = (state) => state.player.score;
 
-export const { addName, addEmail } = playerSlice.actions;
+export const { addName, addEmail, alterScore } = playerSlice.actions;
 export default playerSlice.reducer;
