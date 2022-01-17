@@ -23,6 +23,9 @@ const BoxAnswers = ({ answer, correctAnswer, handleClick, answered, time }) => {
         data-testid={ answer === correctAnswer
           ? 'correct-answer'
           : 'wrong-answer' }
+        value={ answer === correctAnswer
+          ? 'correct'
+          : 'wrong' }
         onClick={ handleClick }
         disabled={ time === 0 || answered }
         sx={ {

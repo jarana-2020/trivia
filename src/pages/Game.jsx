@@ -6,7 +6,10 @@ import Header from '../components/Header';
 import Loading from '../components/Loading';
 import Timer from '../components/Timer';
 import { getQuestions, selectQuestions } from '../features/game/gameSlice';
-import maxTimer from '../helper/helper';
+import { alterScore } from '../features/player/playerSlice';
+import maxTimer, { calcScore, oneSecond } from '../helper/helper';
+
+let timeout;
 
 const renderCategoryAndQuestion = (category, question, timer) => (
   <>
@@ -32,13 +35,22 @@ const renderCategoryAndQuestion = (category, question, timer) => (
   </>
 );
 
+const stopTimer = () => clearTimeout(timeout);
+
 const renderQuestions = (paramsQuestions) => {
   const { questions, questionIndex,
-    isAnswered, setIsAnswered, timer } = paramsQuestions;
+    isAnswered, setIsAnswered, timer, dispatch } = paramsQuestions;
   const correctAnswer = questions[questionIndex].correct_answer;
   const { shuffledQuestions } = questions[questionIndex];
 
-  const handleClickAnswer = () => {
+  const handleClickAnswer = ({ target: { value } }) => {
+    const valueQuestion = value;
+    const level = questions[questionIndex].difficulty;
+    stopTimer();
+
+    if (valueQuestion === 'correct') {
+      dispatch(alterScore(calcScore(timer, level)));
+    }
     setIsAnswered(true);
   };
 
@@ -65,23 +77,21 @@ const Game = () => {
   const [isAnswered, setIsAnswered] = useState(false);
   const [timer, setTimer] = useState(maxTimer);
   const haveData = questions.length > 0;
-  let countDown = maxTimer;
 
-  const paramsQuestions = {
-    questions,
+  const paramsQuestions = { questions,
     questionIndex,
     isAnswered,
     setIsAnswered,
     timer,
-  };
+    dispatch };
 
   const startTimer = () => {
-    const oneSecond = 1000;
+    let countDown = maxTimer;
     if (countDown > 0) {
       countDown -= 1;
       setTimer((prevTimer) => prevTimer - 1);
     }
-    setTimeout(startTimer, oneSecond);
+    timeout = setTimeout(startTimer, oneSecond);
   };
 
   useEffect(() => {

@@ -11,4 +11,20 @@ export const shuffleArray = (arr) => {
   return arr;
 };
 
+export const calcScore = (timer, level) => {
+  const defaultPoint = 10;
+  const hardValue = 3;
+
+  switch (level) {
+  case 'easy':
+    return defaultPoint + (timer * 1);
+  case 'medium':
+    return defaultPoint + (timer * 2);
+  case 'hard':
+    return defaultPoint + (timer * hardValue);
+  default:
+    break;
+  }
+};
+
 export default maxTimer;
