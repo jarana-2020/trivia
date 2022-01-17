@@ -74,27 +74,53 @@ describe("Testing Game Page", () => {
       expect(button).toHaveStyle('borderColor: 3px solid rgb(255, 0, 0)')
     })
   })
-  jest.setTimeout(38000);
 
-  it("should be able to respond after five seconds", async() => {
+  it("shouldn't have a button for next question",async() => {
     render(
       <Provider store={store}>
         <Game />
       </Provider>
     );
-    const buttons = await screen.findAllByTestId(/^wrong-answer$/);
-    await new Promise((r) => setTimeout(r, 6000));
-    expect(buttons[0]).not.toBeDisabled(); 
+    const btnNextQuestion = await screen.findByTestId(/^btn-next$/);
+    expect(btnNextQuestion).not.toBeInTheDocument();
   })
 
-  it("shouldn't be able to respond after thirty seconds", async() => {
+  it("should have a button for next question",async() => {
     render(
       <Provider store={store}>
         <Game />
       </Provider>
     );
-    const buttons = await screen.findAllByTestId(/^wrong-answer$/);
-    await new Promise((r) => setTimeout(r, 33000));
-    expect(buttons[0]).toBeDisabled();
-  })
+    const btnWrong = await screen.findAllByTestId(/^wrong-answer$/);
+    userEvent.click(btnWrong[0]);
+    const btnNextQuestion = screen.findByTestId(/^btn-next$/);
+    expect(btnNextQuestion).toBeInTheDocument();
+  });
+
+  // jest.setTimeout(38000);
+
+  // it("should be able to respond after five seconds", async() => {
+  //   render(
+  //     <Provider store={store}>
+  //       <Game />
+  //     </Provider>
+  //   );
+  //   const buttons = await screen.findAllByTestId(/^wrong-answer$/);
+  //   await new Promise((r) => setTimeout(r, 6000));
+  //   expect(buttons[0]).not.toBeDisabled(); 
+  // })
+
+  // it("shouldn't be able to respond after thirty seconds", async() => {
+  //   render(
+  //     <Provider store={store}>
+  //       <Game />
+  //     </Provider>
+  //   );
+  //   const buttons = await screen.findAllByTestId(/^wrong-answer$/);
+  //   await new Promise((r) => setTimeout(r, 33000));
+  //   expect(buttons[0]).toBeDisabled();
+  // })
+
 })
+
+
