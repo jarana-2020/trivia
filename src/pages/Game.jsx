@@ -6,9 +6,9 @@ import Header from '../components/Header';
 import Loading from '../components/Loading';
 import Timer from '../components/Timer';
 import { getQuestions, selectQuestions } from '../features/game/gameSlice';
-import { addEmail, addName, alterScore,
+import { addEmail, addName,
   selectAssertions, selectScore } from '../features/player/playerSlice';
-import maxTimer, { calcScore, oneSecond } from '../helper/helper';
+import maxTimer, { oneSecond } from '../helper/helper';
 
 let timeout;
 let countDown = maxTimer;
@@ -48,47 +48,14 @@ const renderCategoryAndQuestion = (category, question, timer) => (
 
 const stopTimer = () => clearTimeout(timeout);
 
-const getScore = async (timer, level, valueQuestion, dispatch) => {
-  if (valueQuestion === 'correct') {
-    dispatch(alterScore(calcScore(timer, level)));
-  }
-};
-
 const saveScoreStorage = (assertions, score) => {
   const dataStorage = JSON.parse(localStorage.getItem('player'));
   const playerInfo = { ...dataStorage, assertions, score };
   localStorage.setItem('player', JSON.stringify(playerInfo));
 };
 
-const renderQuestions = (paramsQuestions) => {
-  const { questions, questionIndex,
-    isAnswered, setIsAnswered, timer,
-    dispatch } = paramsQuestions;
-  const correctAnswer = questions[questionIndex].correct_answer;
-  const { shuffledQuestions } = questions[questionIndex];
-
-  const handleClickAnswer = ({ target: { value } }) => {
-    const valueQuestion = value;
-    const level = questions[questionIndex].difficulty;
-    stopTimer();
-    getScore(timer, level, valueQuestion, dispatch);
-    setIsAnswered(true);
-  };
-
-  return (
-    <>
-      {shuffledQuestions.map((answer, index) => (
-        <BoxAnswers
-          key={ index }
-          answer={ answer }
-          answered={ isAnswered }
-          correctAnswer={ correctAnswer }
-          handleClick={ handleClickAnswer }
-          time={ timer }
-        />
-      ))}
-    </>
-  );
+const alterQuestionIndex = (setQuestionIndex) => {
+  setQuestionIndex((prevTimer) => prevTimer + 1);
 };
 
 const Game = () => {
@@ -96,16 +63,8 @@ const Game = () => {
   const questions = useSelector(selectQuestions);
   const assertions = useSelector(selectAssertions);
   const score = useSelector(selectScore);
-  const [questionIndex] = useState(0);
-  const [isAnswered, setIsAnswered] = useState(false);
+  const [questionIndex, setQuestionIndex] = useState(0);
   const [timer, setTimer] = useState(maxTimer);
-
-  const paramsQuestions = { questions,
-    questionIndex,
-    isAnswered,
-    setIsAnswered,
-    timer,
-    dispatch };
 
   const startTimer = () => {
     if (countDown > 0) {
@@ -136,7 +95,13 @@ const Game = () => {
     <>
       <Header />
       {renderCategoryAndQuestion(category, question, timer)}
-      {renderQuestions(paramsQuestions)}
+      <BoxAnswers
+        arrayQuestions={ questions }
+        time={ timer }
+        questionIndex={ questionIndex }
+        stopTimer={ stopTimer }
+        handleClick={ () => alterQuestionIndex(setQuestionIndex) }
+      />
     </>
 
   );

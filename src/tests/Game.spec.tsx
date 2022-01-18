@@ -81,8 +81,8 @@ describe("Testing Game Page", () => {
         <Game />
       </Provider>
     );
-    const btnNextQuestion = await screen.findByTestId(/^btn-next$/);
-    expect(btnNextQuestion).not.toBeInTheDocument();
+    const btnNextQuestion = await screen.findByTestId(/btn-next/);
+    expect(btnNextQuestion).not.toBeVisible();
   })
 
   it("should have a button for next question",async() => {
@@ -93,8 +93,8 @@ describe("Testing Game Page", () => {
     );
     const btnWrong = await screen.findAllByTestId(/^wrong-answer$/);
     userEvent.click(btnWrong[0]);
-    const btnNextQuestion = screen.findByTestId(/^btn-next$/);
-    expect(btnNextQuestion).toBeInTheDocument();
+    const btnNextQuestion = await screen.findByTestId(/^btn-next$/);
+    expect(btnNextQuestion).toBeVisible();
   });
 
   // jest.setTimeout(38000);
