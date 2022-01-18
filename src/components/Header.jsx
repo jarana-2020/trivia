@@ -22,6 +22,7 @@ const renderGravatar = (email) => (
     } }
   >
     <img
+      data-testid="header-profile-picture"
       src={ getGravatar(email) }
       alt="img-gravatar"
     />
@@ -43,7 +44,7 @@ const renderPlayerInfo = (name, score) => (
 
     </Typography>
     <Typography
-      data-testid="player-email"
+      data-testid="player-score"
       variant="h6"
       component="p"
     >
