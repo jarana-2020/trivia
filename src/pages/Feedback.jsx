@@ -1,7 +1,8 @@
 import React from 'react';
+import Header from '../components/Header';
 
 const Feedback = () => (
-  <h1>Feedback</h1>
+  <Header />
 );
 
 export default Feedback;
