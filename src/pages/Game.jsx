@@ -11,7 +11,6 @@ import { addEmail, addName,
 import maxTimer, { oneSecond } from '../helper/helper';
 
 let timeout;
-let countDown = maxTimer;
 
 const getPlayerInfo = (dispatch) => {
   if (localStorage.getItem('player')) {
@@ -54,10 +53,6 @@ const saveScoreStorage = (assertions, score) => {
   localStorage.setItem('player', JSON.stringify(playerInfo));
 };
 
-const alterQuestionIndex = (setQuestionIndex) => {
-  setQuestionIndex((prevTimer) => prevTimer + 1);
-};
-
 const Game = () => {
   const dispatch = useDispatch();
   const questions = useSelector(selectQuestions);
@@ -65,31 +60,31 @@ const Game = () => {
   const score = useSelector(selectScore);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [timer, setTimer] = useState(maxTimer);
+  const [isAnswered, setIsAnswered] = useState(false);
 
-  const startTimer = () => {
-    if (countDown > 0) {
-      countDown -= 1;
-      setTimer((prevTimer) => prevTimer - 1);
-    }
-    timeout = setTimeout(startTimer, oneSecond);
+  const decreaseNum = () => { setTimer(timer - 1); };
+
+  const alterQuestion = () => {
+    setQuestionIndex((prevTimer) => prevTimer + 1);
+    setIsAnswered(false);
+    setTimer(maxTimer);
   };
 
   useEffect(() => {
     dispatch(getQuestions());
     getPlayerInfo(dispatch);
-    startTimer();
-    return () => clearTimeout(startTimer);
   }, []);
 
   useEffect(() => {
-    saveScoreStorage(assertions, score);
-  }, [score]);
+    if (timer === 0) return;
+    timeout = setInterval(decreaseNum, oneSecond);
+    return () => clearInterval(timeout);
+  }, [timer]);
 
-  if (!questions.length > 0) {
-    return (
-      <Loading />
-    );
-  }
+  useEffect(() => saveScoreStorage(assertions, score), [score]);
+
+  if (!questions.length > 0) return <Loading />;
+
   const { category, question } = questions[questionIndex];
   return (
     <>
@@ -100,7 +95,9 @@ const Game = () => {
         time={ timer }
         questionIndex={ questionIndex }
         stopTimer={ stopTimer }
-        handleClick={ () => alterQuestionIndex(setQuestionIndex) }
+        handleClick={ alterQuestion }
+        isAnswered={ isAnswered }
+        setIsAnswered={ setIsAnswered }
       />
     </>
 

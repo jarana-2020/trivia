@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import { Box } from '@mui/system';
 import Proptypes from 'prop-types';
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { alterScore } from '../features/player/playerSlice';
 import { calcScore } from '../helper/helper';
@@ -21,8 +21,7 @@ const getScore = async (timer, level, valueQuestion, dispatch) => {
 };
 
 const BoxAnswers = ({ arrayQuestions, time, questionIndex,
-  stopTimer, handleClick }) => {
-  const [isAnswered, setIsAnswered] = useState(false);
+  stopTimer, handleClick, isAnswered, setIsAnswered }) => {
   const { shuffledQuestions } = arrayQuestions[questionIndex];
   const correctAnswer = arrayQuestions[questionIndex].correct_answer;
   const level = arrayQuestions[questionIndex].difficulty;
@@ -63,7 +62,10 @@ const BoxAnswers = ({ arrayQuestions, time, questionIndex,
           </Button>
         </Box>
       ))}
-      <ButtonNext isAnswered={ isAnswered } handleClick={ handleClick } />
+      <ButtonNext
+        isAnswered={ isAnswered }
+        handleClick={ handleClick }
+      />
     </>
   );
 };
@@ -74,6 +76,8 @@ BoxAnswers.propTypes = {
   time: Proptypes.number.isRequired,
   stopTimer: Proptypes.func.isRequired,
   handleClick: Proptypes.func.isRequired,
+  setIsAnswered: Proptypes.func.isRequired,
+  isAnswered: Proptypes.bool.isRequired,
 };
 
 export default BoxAnswers;
