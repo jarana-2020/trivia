@@ -35,7 +35,7 @@ describe("Testing Feedback Page", () => {
     expect(playerScore).toBeInTheDocument();
   })
 
-  it("should have header with player score", () => {
+  it("should have a feedback message", () => {
     render(
       <Provider store={store}>
         <Feedback />
@@ -43,5 +43,25 @@ describe("Testing Feedback Page", () => {
     );
     const feedbackMessage = screen.getByTestId(/^feedback-total-score$/);
     expect(feedbackMessage).toBeInTheDocument();
+  })
+
+  it("should have a total score message", () => {
+    render(
+      <Provider store={store}>
+        <Feedback />
+      </Provider>
+    );
+    const totalScore = screen.getByTestId(/^feedback-total-score$/);
+    expect(totalScore).toBeInTheDocument();
+  })
+
+  it("should have a total assertions message", () => {
+    render(
+      <Provider store={store}>
+        <Feedback />
+      </Provider>
+    );
+    const totalAssertions = screen.getByTestId(/^feedback-total-question$/);
+    expect(totalAssertions).toBeInTheDocument();
   })
 });
