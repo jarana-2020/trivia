@@ -64,4 +64,14 @@ describe("Testing Feedback Page", () => {
     const totalAssertions = screen.getByTestId(/^feedback-total-question$/);
     expect(totalAssertions).toBeInTheDocument();
   })
+
+  it("should have a button for play again", () => {
+    render(
+      <Provider store={store}>
+        <Feedback />
+      </Provider>
+    );
+    const buttonPlay = screen.getByTestId(/^btn-play-again$/);
+    expect(buttonPlay).toBeInTheDocument();
+  })
 });
