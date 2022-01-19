@@ -3,7 +3,7 @@ import { Box } from '@mui/system';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Header from '../components/Header';
-import { selectAssertions } from '../features/player/playerSlice';
+import { selectAssertions, selectScore } from '../features/player/playerSlice';
 
 const getFeedbackMessage = (assertions) => {
   const MIN_RESULT = 3;
@@ -17,16 +17,12 @@ const getFeedbackMessage = (assertions) => {
 
 const Feedback = () => {
   const assertions = useSelector(selectAssertions);
+  const score = useSelector(selectScore);
   return (
     <>
       <Header />
       <Box
-        sx={ {
-          mt: '20px',
-          border: '1px black solid',
-          justifyContent: 'center',
-          display: 'flex',
-          width: '100%' } }
+        className="box-feedback"
       >
         <Typography
           data-testid="player-name"
@@ -35,6 +31,24 @@ const Feedback = () => {
           style={ { marginRight: '5px' } }
         >
           {getFeedbackMessage(assertions)}
+
+        </Typography>
+        <Typography
+          data-testid="player-name"
+          variant="h6"
+          component="p"
+          style={ { marginRight: '5px' } }
+        >
+          {`Total Score: ${score}`}
+
+        </Typography>
+        <Typography
+          data-testid="player-name"
+          variant="h6"
+          component="p"
+          style={ { marginRight: '5px' } }
+        >
+          {`Total Assertions: ${assertions}`}
 
         </Typography>
       </Box>
