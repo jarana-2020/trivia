@@ -34,4 +34,14 @@ describe("Testing Feedback Page", () => {
     const playerScore = screen.getByTestId(/^player-score$/);
     expect(playerScore).toBeInTheDocument();
   })
+
+  it("should have header with player score", () => {
+    render(
+      <Provider store={store}>
+        <Feedback />
+      </Provider>
+    );
+    const feedbackMessage = screen.getByTestId(/^feedback-total-score$/);
+    expect(feedbackMessage).toBeInTheDocument();
+  })
 });
