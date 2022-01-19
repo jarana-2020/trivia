@@ -50,7 +50,7 @@ body {
   justify-content: center;
   left: 50%;
   margin-top: 20px;
-  position: absolute;
+  position: relative;
   transform: translateX(-50%);
   width: 20em;
 }
