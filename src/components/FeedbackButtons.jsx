@@ -15,6 +15,7 @@ const FeedbackButtons = ({ handlePlayAgain, handleRanking }) => (
       data-testid="btn-play-again"
       variant="contained"
       onClick={ handlePlayAgain }
+      sx={ { mr: '5px' } }
     >
       Play Again
     </Button>
