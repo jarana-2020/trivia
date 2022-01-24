@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -8,7 +8,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import Box from '@mui/material/Box';
 import { useDispatch } from 'react-redux';
-import { addName, addEmail } from '../features/player/playerSlice';
+import { addName, addEmail, resetInfo } from '../features/player/playerSlice';
 import logo from '../images/trivia.png';
 import '../App.css';
 import requestToken from '../services/requestToken';
@@ -80,6 +80,10 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const history = useHistory();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(resetInfo());
+  }, []);
 
   return (
     <Box
