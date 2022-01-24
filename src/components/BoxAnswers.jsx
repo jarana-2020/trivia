@@ -14,23 +14,29 @@ const alterBorderColor = (answer, correctAnswer) => {
   return '3px solid rgb(255, 0, 0)';
 };
 
-const getScore = async (timer, level, valueQuestion, dispatch) => {
+const getScore = async (timerAndScore, level, valueQuestion, dispatch) => {
+  const { time, playerScore } = timerAndScore;
   if (valueQuestion === 'correct') {
-    dispatch(alterScore(calcScore(timer, level)));
+    dispatch(alterScore(calcScore(time, level) + playerScore));
   }
 };
 
 const BoxAnswers = ({ arrayQuestions, time, questionIndex,
-  stopTimer, handleClick, isAnswered, setIsAnswered }) => {
+  stopTimer, handleClick, isAnswered, setIsAnswered, playerScore }) => {
   const { shuffledQuestions } = arrayQuestions[questionIndex];
   const correctAnswer = arrayQuestions[questionIndex].correct_answer;
   const level = arrayQuestions[questionIndex].difficulty;
   const dispatch = useDispatch();
 
+  const timeAndScore = {
+    time,
+    playerScore,
+  };
+
   const handleClickAnswer = ({ target }) => {
     const { value } = target;
     stopTimer();
-    getScore(time, level, value, dispatch);
+    getScore(timeAndScore, level, value, dispatch);
     setIsAnswered(true);
   };
 
@@ -39,11 +45,7 @@ const BoxAnswers = ({ arrayQuestions, time, questionIndex,
       {shuffledQuestions.map((answer, index) => (
         <Box
           key={ index }
-          sx={ {
-            mt: '10px',
-            justifyContent: 'center',
-            display: 'flex',
-            width: '100%' } }
+          className="box-answers"
         >
           <Button
             data-testid={ answer === correctAnswer
@@ -78,6 +80,7 @@ BoxAnswers.propTypes = {
   handleClick: Proptypes.func.isRequired,
   setIsAnswered: Proptypes.func.isRequired,
   isAnswered: Proptypes.bool.isRequired,
+  playerScore: Proptypes.number.isRequired,
 };
 
 export default BoxAnswers;

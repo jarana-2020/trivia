@@ -114,9 +114,9 @@ const Game = () => {
         handleClick={ alterQuestion }
         isAnswered={ isAnswered }
         setIsAnswered={ setIsAnswered }
+        playerScore={ score }
       />
-    </>
-  );
+    </>);
 };
 
 export default Game;
