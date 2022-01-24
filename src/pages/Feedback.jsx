@@ -16,8 +16,8 @@ const getFeedbackMessage = (assertions) => {
   }
 };
 
-const redirectPageLogin = (history) => {
-  history.push('/');
+const redirectPage = (history, route) => {
+  history.push(route);
 };
 
 const Feedback = () => {
@@ -33,7 +33,8 @@ const Feedback = () => {
         getMessage={ getFeedbackMessage }
       />
       <FeedbackButtons
-        handlePlayAgain={ () => redirectPageLogin(history) }
+        handlePlayAgain={ () => redirectPage(history, '/') }
+        handleRanking={ () => redirectPage(history, '/ranking') }
       />
     </>
   );

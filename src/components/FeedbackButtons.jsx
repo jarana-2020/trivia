@@ -3,7 +3,7 @@ import { Box } from '@mui/system';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const FeedbackButtons = ({ handlePlayAgain }) => (
+const FeedbackButtons = ({ handlePlayAgain, handleRanking }) => (
   <Box
     sx={ {
       display: 'flex',
@@ -18,11 +18,19 @@ const FeedbackButtons = ({ handlePlayAgain }) => (
     >
       Play Again
     </Button>
+    <Button
+      data-testid="btn-ranking"
+      variant="contained"
+      onClick={ handleRanking }
+    >
+      Ranking
+    </Button>
   </Box>
 );
 
 FeedbackButtons.propTypes = {
   handlePlayAgain: PropTypes.func.isRequired,
+  handleRanking: PropTypes.func.isRequired,
 };
 
 export default FeedbackButtons;
