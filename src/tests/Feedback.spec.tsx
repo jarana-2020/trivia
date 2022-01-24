@@ -74,4 +74,14 @@ describe("Testing Feedback Page", () => {
     const buttonPlay = screen.getByTestId(/^btn-play-again$/);
     expect(buttonPlay).toBeInTheDocument();
   })
+
+  it("should have a button for ranking page", () => {
+    render(
+      <Provider store={store}>
+        <Feedback />
+      </Provider>
+    );
+    const buttonRanking = screen.getByTestId(/^btn-ranking$/);
+    expect(buttonRanking).toBeInTheDocument();
+  })
 });
