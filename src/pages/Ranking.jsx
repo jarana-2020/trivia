@@ -1,5 +1,8 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import React from 'react';
+import SendIcon from '@mui/icons-material/Send';
+import { useHistory } from 'react-router-dom';
+import RankingValues from '../components/RankingValues';
 
 const compare = (a, b) => {
   const negative = -1;
@@ -9,46 +12,22 @@ const compare = (a, b) => {
 };
 
 const Ranking = () => {
+  const history = useHistory();
   const ranking = JSON.parse(localStorage.getItem('ranking'));
   ranking.sort(compare);
   return (
     <Box
       className="box-ranking"
     >
-      <Typography
-        data-testid="ranking-title"
-        variant="h1"
-        component="p"
-        mb="0.2em"
+      <RankingValues array={ ranking } />
+      <Button
+        variant="contained"
+        endIcon={ <SendIcon /> }
+        onClick={ () => history.push('/') }
+        sx={ { mt: '5px' } }
       >
-        Ranking
-      </Typography>
-      { ranking.map((player, index) => (
-        <Box
-          key={ index }
-          className="box-ranking-data"
-        >
-          <img alt="img-player" src={ player.picture } />
-          <Typography
-            data-testid={ `player-name-${index}` }
-            variant="h4"
-            component="p"
-            ml="0.5em"
-          >
-            {player.name}
-
-          </Typography>
-          <Typography
-            data-testid={ `player-name-${index}` }
-            variant="h4"
-            component="p"
-            ml="0.3em"
-          >
-            {player.score}
-
-          </Typography>
-        </Box>
-      ))}
+        Play again
+      </Button>
     </Box>
   );
 };
