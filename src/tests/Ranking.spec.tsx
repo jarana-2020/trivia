@@ -37,4 +37,14 @@ describe("Testing Ranking Page", () => {
     expect(playerScore).toBeInTheDocument();
   })
 
+  it("shold have button to the beginning", () => {
+    render(
+      <Provider store={store}>
+        <Ranking />
+      </Provider>
+    );
+    const buttonBegin = screen.getByTestId(/^btn-go-home$/);
+    expect(buttonBegin).toBeInTheDocument();
+  })
+
 });
