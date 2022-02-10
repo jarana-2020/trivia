@@ -1,13 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { shuffleArray } from '../../helper/helper';
-
-const url = 'https://opentdb.com/api.php?amount=5';
+import { fetchQuestions, shuffleArray } from '../../helper/helper';
 
 export const getQuestions = createAsyncThunk(
   'game/getQuestions',
-  async () => {
-    const fetchData = await fetch(url);
-    const result = await fetchData.json();
+  async (url) => {
+    const result = await fetchQuestions(url);
     const { results } = result;
     const newResults = results.map((question) => {
       const { incorrect_answers: incorrect, correct_answer: correct } = question;
@@ -23,8 +20,13 @@ const gameSlice = createSlice({
   name: 'game',
   initialState: {
     questions: [],
+    entryPoint: 'https://opentdb.com/api.php?amount=5&encode=base64',
   },
-  reducers: {},
+  reducers: {
+    alterUrl(state, action) {
+      state.entryPoint = action.payload;
+    },
+  },
   extraReducers: {
     [getQuestions.fulfilled]: (state, { payload }) => {
       state.questions = payload;
@@ -32,6 +34,7 @@ const gameSlice = createSlice({
   },
 
 });
-
+export const selectUrl = (state) => state.game.entryPoint;
 export const selectQuestions = (state) => state.game.questions;
+export const { alterUrl } = gameSlice.actions;
 export default gameSlice.reducer;
