@@ -14,7 +14,7 @@ export default function App() {
       <Route path="/settings" component={ Settings } />
       <Route path="/feedback" component={ Feedback } />
       <Route path="/ranking" component={ Ranking } />
-      <Route exact path="/" component={ Login } />
+      <Route exact path="/trivia" component={ Login } />
     </Switch>
   );
 }
