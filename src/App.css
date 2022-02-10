@@ -34,7 +34,7 @@ body {
   width: 50%;
 }
 
-.btn-next {
+.btn-next, .btn-settings {
   left: 50%;
   position: absolute;
   top: 20px;
@@ -55,7 +55,7 @@ body {
   width: 20em;
 }
 
-.box-answers, .box-ranking {
+.box-answers, .box-ranking, .box-settings {
   align-items: center;
   display: flex;
   justify-content: center;
@@ -74,4 +74,8 @@ body {
   display: flex;
   margin-bottom: 0.2em;
   width: 35%;
+}
+
+.box-settings {
+  flex-direction: column;
 }
