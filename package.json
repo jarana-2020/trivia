@@ -1,6 +1,5 @@
 {
   "name": "trivia-test",
-  "homepage": "https://jarana-2020.github.io/trivia",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
