@@ -27,4 +27,12 @@ export const calcScore = (timer, level) => {
   }
 };
 
+export const fetchQuestions = async (url) => {
+  const fetchData = await fetch(url);
+  const result = await fetchData.json();
+  return result;
+};
+
+export const b64ToUtf8 = (str) => decodeURIComponent(atob(str));
+
 export default maxTimer;
