@@ -8,7 +8,7 @@ const FeedbackMessage = ({ assertions, score, getMessage }) => (
     className="box-feedback"
   >
     <Typography
-      data-testid="player-name"
+      data-testid="feedback-text"
       variant="h6"
       component="p"
       style={ { marginRight: '5px' } }
@@ -17,7 +17,7 @@ const FeedbackMessage = ({ assertions, score, getMessage }) => (
 
     </Typography>
     <Typography
-      data-testid="player-name"
+      data-testid="feedback-total-score"
       variant="h6"
       component="p"
       style={ { marginRight: '5px' } }
@@ -26,7 +26,7 @@ const FeedbackMessage = ({ assertions, score, getMessage }) => (
 
     </Typography>
     <Typography
-      data-testid="player-name"
+      data-testid="feedback-total-question"
       variant="h6"
       component="p"
       style={ { marginRight: '5px' } }

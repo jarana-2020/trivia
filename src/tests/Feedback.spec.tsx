@@ -5,6 +5,7 @@ import Feedback from '../pages/Feedback';
 import store from '../store';
 
 describe("Testing Feedback Page", () => {
+  Storage.prototype.getItem = jest.fn(() => 'name');
   it("should have header with gravatar image", () => {
     render(
       <Provider store={store}>

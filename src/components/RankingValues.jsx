@@ -29,7 +29,7 @@ const RankingValues = ({ array }) => (
 
         </Typography>
         <Typography
-          data-testid={ `player-name-${index}` }
+          data-testid={ `player-score-${index}` }
           variant="h4"
           component="p"
           ml="0.3em"

@@ -5,8 +5,9 @@ import Ranking from '../pages/Ranking';
 import store from '../store';
 
 
-describe("Testing Ranking Page", () => {
 
+describe("Testing Ranking Page", () => {
+  localStorage.setItem("ranking",JSON.stringify( [{name: 'julio',score: 172, picture: 'htts://gravatar'}]));
   it("should have a title", () => {
     render(
       <Provider store={store}>

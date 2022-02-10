@@ -21,6 +21,7 @@ const Ranking = () => {
     >
       <RankingValues array={ ranking } />
       <Button
+        data-testid="btn-go-home"
         variant="contained"
         endIcon={ <SendIcon /> }
         onClick={ () => history.push('/') }
