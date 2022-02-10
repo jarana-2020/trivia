@@ -6,10 +6,9 @@ import BoxAnswers from '../components/BoxAnswers';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
 import Timer from '../components/Timer';
-import { getQuestions, selectQuestions } from '../features/game/gameSlice';
-import { addEmail, addName,
-  selectAssertions, selectScore } from '../features/player/playerSlice';
-import maxTimer, { oneSecond } from '../helper/helper';
+import { getQuestions, selectQuestions, selectUrl } from '../features/game/gameSlice';
+import { addEmail, addName } from '../features/player/playerSlice';
+import maxTimer, { b64ToUtf8, oneSecond } from '../helper/helper';
 
 let timeout;
 
@@ -32,7 +31,7 @@ const renderCategoryAndQuestion = (questionObj, timer) => {
         variant="h6"
         component="p"
       >
-        {category}
+        { b64ToUtf8(category) }
 
       </Typography>
       <Typography
@@ -41,7 +40,7 @@ const renderCategoryAndQuestion = (questionObj, timer) => {
         variant="h6"
         component="p"
       >
-        {question}
+        { b64ToUtf8(question) }
 
       </Typography>
       <Timer timer={ timer } />
@@ -50,12 +49,6 @@ const renderCategoryAndQuestion = (questionObj, timer) => {
 };
 
 const stopTimer = () => clearTimeout(timeout);
-
-const saveScoreStorage = (assertions, score) => {
-  const dataStorage = JSON.parse(localStorage.getItem('player'));
-  const playerInfo = { ...dataStorage, assertions, score };
-  localStorage.setItem('player', JSON.stringify(playerInfo));
-};
 
 const redirectPage = (history) => {
   history.push('/feedback');
@@ -71,8 +64,7 @@ const verifyIndexQuestion = (setQuestionIndex, setIsAnswered,
 const Game = () => {
   const dispatch = useDispatch();
   const questions = useSelector(selectQuestions);
-  const assertions = useSelector(selectAssertions);
-  const score = useSelector(selectScore);
+  const url = useSelector(selectUrl);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [timer, setTimer] = useState(maxTimer);
   const [isAnswered, setIsAnswered] = useState(false);
@@ -88,7 +80,7 @@ const Game = () => {
   };
 
   useEffect(() => {
-    dispatch(getQuestions());
+    dispatch(getQuestions(url));
     getPlayerInfo(dispatch);
   }, []);
 
@@ -98,10 +90,7 @@ const Game = () => {
     return () => clearInterval(timeout);
   }, [timer]);
 
-  useEffect(() => saveScoreStorage(assertions, score), [score]);
-
   if (!questions.length > 0) return <Loading />;
-
   return (
     <>
       <Header />
@@ -114,7 +103,6 @@ const Game = () => {
         handleClick={ alterQuestion }
         isAnswered={ isAnswered }
         setIsAnswered={ setIsAnswered }
-        playerScore={ score }
       />
     </>);
 };
